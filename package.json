@@ -1,0 +1,12 @@
+{
+  "name": "domain-jane",
+  "version": "0.1.0",
+  "description": "Desktop app for domain availability checks and expiry countdown tracking.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^36.0.0"
+  }
+}

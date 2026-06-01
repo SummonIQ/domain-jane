@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Domain Jane</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="topbar-meta">
+          <div class="window-brand">
+            <svg class="window-brand-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <rect x="5.25" y="5.25" width="13.5" height="13.5" rx="3.25" stroke="currentColor" stroke-opacity="0.82" stroke-width="1.5" />
+              <circle cx="12" cy="12" r="2.35" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="1.4" />
+              <path d="M8 12H5" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.3" stroke-linecap="round" />
+              <path d="M19 12H16" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.3" stroke-linecap="round" />
+              <path d="M12 8V5" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.3" stroke-linecap="round" />
+              <path d="M12 19V16" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.3" stroke-linecap="round" />
+            </svg>
+            <span>Domain Name Jane</span>
+          </div>
+          <nav class="tabs" aria-label="Views">
+            <button class="tab-button is-active" type="button" data-tab="lookup" data-route="/lookup">Lookup</button>
+            <button class="tab-button" type="button" data-tab="watchlist" data-route="/watchlist">Watchlist</button>
+            <button class="tab-button" type="button" data-tab="ideas" data-route="/ideas">AI ideas</button>
+          </nav>
+        </div>
+      </header>
+
+      <main class="tab-panels">
+        <section class="panel tab-panel is-active" data-panel="lookup">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Domain Lookup</p>
+            </div>
+          </div>
+          <div class="control-block">
+            <form id="lookup-form" class="lookup-form">
+              <input id="lookup-input" name="query" type="text" placeholder="winzen.com" autocomplete="off" />
+              <button type="submit" id="lookup-button">Lookup</button>
+            </form>
+            <div class="progress-block is-hidden" id="lookup-progress-block" aria-hidden="true">
+              <div class="progress-track"><div class="progress-fill" id="lookup-progress-fill"></div></div>
+            </div>
+            <p id="lookup-status" class="status-line"></p>
+          </div>
+          <div class="list-shell">
+            <div id="lookup-result" class="lookup-result list-body"></div>
+          </div>
+        </section>
+
+        <section class="panel tab-panel" data-panel="watchlist">
+          <div class="section-heading section-heading--split">
+            <div>
+              <p class="section-kicker">Watchlist</p>
+              <h2>Expiry queue</h2>
+            </div>
+            <button
+              id="refresh-favorites"
+              class="secondary-button icon-button"
+              type="button"
+              aria-label="Refresh watchlist"
+              title="Refresh watchlist"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+                <path
+                  d="M20 6V10H16"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M4 18V14H8"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M7.6 10A7 7 0 0 1 19.2 7.3L20 10"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M16.4 14A7 7 0 0 1 4.8 16.7L4 14"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="watchlist-overview">
+            <div class="overview-stat">
+              <span class="overview-label">Tracked</span>
+              <strong id="watchlist-count">0</strong>
+            </div>
+            <div class="overview-stat">
+              <span class="overview-label">Closest expiry</span>
+              <strong id="watchlist-next-expiry">None</strong>
+            </div>
+            <div class="overview-stat">
+              <span class="overview-label">Closest drop</span>
+              <strong id="watchlist-next-drop">None</strong>
+            </div>
+          </div>
+          <p class="status-line" id="favorites-status">Saved domains are stored locally on this machine.</p>
+          <div class="progress-block is-hidden" id="favorites-progress-block" aria-hidden="true">
+            <div class="progress-track"><div class="progress-fill" id="favorites-progress-fill"></div></div>
+          </div>
+          <div class="list-shell list-shell--stacked">
+            <div id="favorites" class="watchlist-body list-body"></div>
+          </div>
+        </section>
+
+        <section class="panel tab-panel" data-panel="ideas">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">AI Generator</p>
+              <h2>Brandable .com names with expiry priority</h2>
+            </div>
+          </div>
+          <div class="control-block">
+            <form id="ideas-form" class="ideas-form">
+              <label class="field">
+                <span>Theme or keyword (optional)</span>
+                <input id="ideas-input" type="text" placeholder="Leave blank for general premium .com ideas" autocomplete="off" />
+              </label>
+              <button type="submit" id="ideas-button">Generate and check</button>
+            </form>
+            <div class="progress-block is-hidden" id="ideas-progress-block" aria-hidden="true">
+              <div class="progress-track"><div class="progress-fill" id="ideas-progress-fill"></div></div>
+            </div>
+            <p id="ideas-status" class="status-line">Generate a batch of AI .com ideas, with or without a prompt.</p>
+          </div>
+          <div class="list-shell list-shell--stacked">
+            <div id="ideas-results" class="ideas-results list-body"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <template id="lookup-card-template">
+      <article class="lookup-card">
+        <div class="lookup-card-head">
+          <div>
+            <p class="data-label">Domain</p>
+            <h3 class="domain-name"></h3>
+            <p class="record-summary"></p>
+          </div>
+          <span class="badge"></span>
+        </div>
+        <div class="lookup-metrics">
+          <div>
+            <span>Registrar</span>
+            <strong class="registrar-value"></strong>
+          </div>
+          <div>
+            <span>Expires</span>
+            <strong class="expiry-value"></strong>
+          </div>
+          <div>
+            <span>Drop</span>
+            <strong class="drop-value"></strong>
+          </div>
+          <div>
+            <span>Countdown</span>
+            <strong class="countdown-value"></strong>
+          </div>
+        </div>
+        <div class="lookup-explainer">
+          <span class="status-explainer"></span>
+          <span class="lock-explainer"></span>
+        </div>
+        <p class="card-copy"></p>
+        <div class="card-actions">
+          <button type="button" class="save-button">Watch</button>
+        </div>
+      </article>
+    </template>
+
+    <template id="watch-row-template">
+      <article class="list-item watch-row">
+        <div class="list-item-head">
+          <div class="watch-domain">
+            <strong class="domain-name"></strong>
+            <span class="watch-note"></span>
+          </div>
+          <div class="item-menu-wrap">
+            <button type="button" class="item-menu-button secondary-button" aria-label="More actions">•••</button>
+            <div class="item-menu">
+              <button type="button" class="remove-button menu-item">Remove from watchlist</button>
+            </div>
+          </div>
+        </div>
+        <div class="watch-row-grid">
+          <div class="watch-window watch-window--cards">
+            <div class="metric-card">
+              <span class="metric-label">Expires</span>
+              <span class="expiry-date"></span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Estimated drop</span>
+              <span class="drop-date"></span>
+            </div>
+          </div>
+          <div class="watch-status-block">
+            <span class="watch-status"></span>
+            <span class="countdown-pill"></span>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <template id="idea-card-template">
+      <article class="list-item idea-card">
+        <div class="list-item-head">
+          <div class="watch-domain">
+            <strong class="domain-name"></strong>
+            <span class="watch-note rationale"></span>
+          </div>
+          <div class="item-menu-wrap">
+            <button type="button" class="item-menu-button secondary-button" aria-label="More actions">•••</button>
+            <div class="item-menu">
+              <button type="button" class="save-button menu-item">Add to watchlist</button>
+            </div>
+          </div>
+        </div>
+        <div class="idea-meta-grid">
+          <div class="idea-meta-block">
+            <span class="idea-meta-label">Status</span>
+            <span class="idea-status"></span>
+          </div>
+          <div class="idea-meta-block">
+            <span class="idea-meta-label">Expires</span>
+            <span class="expiry-date"></span>
+          </div>
+          <div class="idea-meta-block">
+            <span class="idea-meta-label">Drop</span>
+            <span class="drop-date"></span>
+          </div>
+        </div>
+        <div class="idea-detail">
+          <p class="card-copy"></p>
+          <span class="idea-explainer"></span>
+        </div>
+      </article>
+    </template>
+
+    <script src="./renderer.js"></script>
+  </body>
+</html>
